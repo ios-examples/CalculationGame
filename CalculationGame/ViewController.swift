@@ -34,8 +34,14 @@ class ViewController: UIViewController, UITextFieldDelegate, UIPickerViewDelegat
         text.text = carpim_bul()
     }
     @IBAction func openSettings(sender: AnyObject) {
-        settingsView.hidden = false
+        settingsView.frame.origin.y = 0//-1 * settingsView.frame.height;
         resultTextField.resignFirstResponder()
+        UIView.animateWithDuration(0.3, delay: 0, options: .CurveEaseOut, animations: {
+                self.settingsView.frame.origin.y = 200
+                self.settingsView.hidden = false
+            }, completion: { finished in
+                println("Settings opened!")
+        })
     }
     
     @IBAction func saveSettings(sender: AnyObject) {
@@ -71,9 +77,15 @@ class ViewController: UIViewController, UITextFieldDelegate, UIPickerViewDelegat
 
         defaults.setInteger(maximumNumberTextField.text.toInt()!, forKey: "maximumNumber")
         defaults.setValue(operatorTextField.text, forKey: "currentOperator")
-            
-        settingsView.hidden = true
+        
         maximumNumberTextField.resignFirstResponder()
+        
+        UIView.animateWithDuration(0.3, delay: 0, options: .CurveEaseOut, animations: {
+            self.settingsView.frame.origin.y = -1 * self.settingsView.frame.height
+            }, completion: { finished in
+                println("Settings closed!")
+                self.settingsView.hidden = true
+        })
         
         
     }
